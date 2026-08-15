@@ -483,16 +483,7 @@ WheelsOnRoad provides a complete end-to-end rental experience across the custome
 
 The business landing page introduces the WheelsOnRoad premium rental platform through a modern dark-themed interface.
 
-It provides:
-
-- Brand introduction
-- Premium vehicle showcase
-- Rental categories
-- Featured vehicles
-- Navigation to the fleet
-- Clear booking call-to-action
-
-![Business landing page screenshot](./docs/screenshots/business-page.png)
+![Business landing page screenshot](./Images/1st.png)
 
 ### 👤 2. User Fleet Page
 
@@ -507,8 +498,7 @@ Users can:
 - Check availability
 - Open vehicle details
 
-![User fleet page screenshot](./docs/screenshots/user-fleet-page.png)
-
+![User Fleet Page](./Images/User%20Fleet%20Page.png)
 ### 🏍️ 3. Vehicle Details Page
 
 The vehicle details page provides complete information about an individual rental vehicle.
@@ -525,8 +515,7 @@ It includes:
 - Dynamic price breakdown
 - Booking action
 
-![Vehicle details page screenshot](./docs/screenshots/vehicle-details-page.png)
-
+![Vehicle Details Page](./Images/Vehicle%20Details%20Page.png)
 ### 💳 4. UPI Checkout
 
 The checkout page provides customers with a UPI QR-based payment experience.
@@ -543,8 +532,7 @@ Customers can view:
 - UPI payment instructions
 - QR code
 
-![UPI checkout screenshot](./docs/screenshots/upi-checkout.png)
-
+![UPI Checkout](./Images/UPI%20Checkout.png)
 ### ⚙️ 5. Fleet Management Console
 
 The Fleet Management Console provides administrators with centralized control over the rental inventory.
@@ -560,23 +548,7 @@ Administrators can:
 - 🗑️ Remove vehicles
 - 📋 View fleet inventory
 
-![Fleet management console screenshot](./docs/screenshots/admin-fleet-management.png)
-
-### 📊 6. Admin Dashboard
-
-The Admin Dashboard provides administrators with a centralized overview of the rental platform.
-
-It displays information such as:
-
-- Total vehicles
-- Total bookings
-- Pending bookings
-- Active rides
-- Revenue information
-- Fleet statistics
-- Booking activity
-
-![Admin dashboard screenshot](./docs/screenshots/admin-dashboard.png)
+![Fleet Management Console](./Images/%20Fleet%20Management%20Console.png)
 
 ### 🍃 7. MongoDB Database
 
@@ -591,8 +563,7 @@ The database stores information including:
 - 💳 Payment configuration
 - ⚙️ Administrative settings
 
-![MongoDB Atlas database screenshot](./docs/screenshots/mongodb-database.png)
-
+![MongoDB Database](./Images/MongoDB%20Database.png)
 ---
 
 ## 🔄 Complete Platform Architecture
@@ -644,41 +615,6 @@ The database stores information including:
                        Payment Settings
 ```
 
----
-
-## 📷 Screenshot Gallery
-
-### Business & Customer Experience
-
-| 🏢 Business Page | 👤 User Fleet |
-|---|---|
-| ![Business page](./docs/screenshots/business-page.png) | ![User fleet page](./docs/screenshots/user-fleet-page.png) |
-
-### Vehicle & Booking
-
-| 🏍️ Vehicle Details | 💳 UPI Checkout |
-|---|---|
-| ![Vehicle details page](./docs/screenshots/vehicle-details-page.png) | ![UPI checkout](./docs/screenshots/upi-checkout.png) |
-
-### Administration
-
-| ⚙️ Fleet Management | 📊 Admin Dashboard |
-|---|---|
-| ![Fleet management console](./docs/screenshots/admin-fleet-management.png) | ![Admin dashboard](./docs/screenshots/admin-dashboard.png) |
-
-### Database
-
-<div align="center">
-
-**🍃 MongoDB Atlas**
-
-![MongoDB Atlas database](./docs/screenshots/mongodb-database.png)
-
-</div>
-
-> Add your own screenshots into `docs/screenshots/` with the filenames shown above so they render correctly on GitHub.
-
----
 
 ## 🏆 Results
 
@@ -782,7 +718,6 @@ Submit a Pull Request for review.
 Potential future improvements include:
 
 - 💳 Razorpay / Stripe integration
-- ⭐ Vehicle reviews and ratings
 - 📧 Automated email confirmations
 - 📱 SMS booking notifications
 - 📍 GPS-based vehicle tracking
