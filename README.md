@@ -673,7 +673,7 @@ Administrators can:
 * Remove vehicles
 * View fleet inventory
 
-![Fleet Management Console](./Images/Fleet%20Management%20Console.png)
+![Fleet Management Console](./Images/%20Fleet%20Management%20Console.png)
 
 ---
 
