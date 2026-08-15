@@ -17,142 +17,363 @@ A full-stack MERN application delivering a sleek, dark-themed rental experience 
 
 ---
 
-## Project Description
+## 📌 Project Description
 
-**WheelsOnRoad** (internally codenamed **ApexLease**) is a production-style, full-stack MERN platform built for renting high-performance superbikes and supercars. It offers a premium, dark-themed booking experience for customers alongside a secure, role-gated control center for fleet administrators.
+**WheelsOnRoad** (internally codenamed **ApexLease**) is a production-style, full-stack MERN platform built for renting high-performance superbikes and supercars.
 
-The platform is engineered around a real problem in rental systems: **preventing double-bookings under concurrent demand**. Every booking request passes through atomic database checks combined with Socket.io-driven locks, so two customers can never reserve the same vehicle for overlapping dates — even when they hit "Book Now" at the same moment.
+The platform provides a premium dark-themed booking experience for customers along with a dedicated administrative control center for managing the rental fleet, bookings, users, and payment configuration.
 
-Beyond availability, the system computes **dynamic pricing** (weekday/weekend surge rates, multi-day discounts) server-side at booking time, and settles payments through a **UPI QR-based checkout** that admins can reconfigure — new UPI ID, instructions, or QR code — without a redeploy.
+The system is designed around a major real-world rental challenge:
 
-**Repository:** [WheelsOnRoad](#) *(replace with your GitHub repo link)*
+> **Preventing double bookings when multiple customers attempt to reserve the same vehicle simultaneously.**
 
----
+Every booking request passes through server-side availability validation and atomic database checks. Socket.io is also used to provide real-time vehicle locking during the booking process.
 
-## Table of Contents
+The platform also includes:
 
-- [Overview](#overview)
-- [Features](#features)
-- [How It Works](#how-it-works)
-- [Tech Stack](#tech-stack)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Security Notes](#security-notes)
-- [Results](#results)
-- [Contributing](#contributing)
-- [License](#license)
+- Dynamic weekday/weekend pricing
+- Multi-day rental discounts
+- Real-time fleet availability
+- JWT authentication
+- Role-Based Access Control
+- Admin fleet management
+- Booking management
+- UPI QR-based checkout
+- MongoDB Atlas persistence
+- Socket.io real-time communication
 
----
-
-## Overview
-
-WheelsOnRoad is split into three independent applications sharing one backend API:
-
-- **Customer app (`frontend/`)** — browse the fleet, check real-time availability, and complete bookings with a full price breakdown and UPI checkout.
-- **Admin app (`admin/`)** — a separate Vite + React dashboard for managing inventory, approving/cancelling bookings, and configuring payment settings.
-- **Backend (`backend/`)** — an Express + Socket.io API backed by MongoDB Atlas, handling authentication, booking concurrency, pricing, and RBAC-protected admin operations.
-
-This separation mirrors how real rental/fleet platforms are structured in production, with the admin surface fully decoupled from the customer-facing app.
+**Repository:** *Replace this with your GitHub repository link.*
 
 ---
 
-## Features
+## 📑 Table of Contents
 
-### For Renters
-- 🏎️ **Premium Fleet Browsing** — search and filter an extensive catalog of superbikes and supercars
-- ⚡ **Real-Time Availability** — atomic collision checks + Socket.io locks prevent double-booking
-- 💰 **Dynamic Pricing Engine** — automatic weekday/weekend surge rates and multi-day discounts
-- 🔐 **Seamless Checkout** — detailed price breakdown with secure UPI QR-based payments
-- 📊 **My Dashboard** — track active, pending, and past rides in one place
-
-### For Fleet Administrators
-- 📈 **Live Dashboard** — real-time overview of revenue, active rides, and pending approvals
-- 🚘 **Inventory Management** — full CRUD for fleet vehicles directly from the UI
-- ✅ **Booking Management** — approve, confirm, activate, or cancel bookings end-to-end
-- 🧾 **Dynamic Payment Settings** — update UPI ID, instructions, and QR code without touching code
-- 🛡️ **Secure Access Control** — JWT-based Role-Based Access Control (RBAC) on every admin route
-
----
-
-## How It Works
-
-**Booking Concurrency**
-When a customer selects dates for a vehicle, the backend runs an atomic availability check against existing bookings for that date range. Simultaneously, a Socket.io lock is placed on the vehicle for the duration of the checkout flow, so a second customer attempting to book the same vehicle for overlapping dates is blocked in real time rather than discovering a conflict after payment.
-
-**Dynamic Pricing**
-Price is never trusted from the client. At booking time, the backend recalculates the total server-side: base rate → weekday/weekend surge adjustment → multi-day discount → final price. This keeps pricing logic centralized, consistent, and tamper-resistant.
-
-**Role-Based Access Control**
-Every admin route (inventory CRUD, booking status changes, payment settings) sits behind JWT middleware that checks both a valid token and an `admin` role claim. Customer accounts are rejected at the middleware layer before any controller logic runs.
-
-**Payment Configuration**
-UPI ID, checkout instructions, and the QR code image are stored in MongoDB rather than hardcoded, so admins can update payment details from the dashboard — no code changes or redeploys required.
+- [Overview](#-overview)
+- [Features](#-features)
+- [How It Works](#-how-it-works)
+- [Tech Stack](#️-tech-stack)
+- [Installation](#-installation)
+- [Usage](#️-usage)
+- [Project Structure](#-project-structure)
+- [Application Showcase & Results](#-application-showcase--results)
+- [Complete Platform Architecture](#-complete-platform-architecture)
+- [Security Notes](#-security-notes)
+- [Results](#-results)
+- [Contributing](#-contributing)
+- [Future Enhancements](#-future-enhancements)
+- [License](#-license)
 
 ---
 
-## Tech Stack
+## 🚀 Overview
 
-**Frontend** — React.js · Context API (state management) · Axios · Lucide-React (icons) · Vanilla CSS (Dark/Orange theme)
+WheelsOnRoad is divided into three major applications working together through a common backend API.
 
-**Backend** — Node.js · Express.js
+### 👤 Customer Application
 
-**Database** — MongoDB Atlas (Mongoose ODM)
+Located inside `frontend/`
 
-**Auth & Security** — JSON Web Tokens (JWT) · bcrypt password hashing
+The customer application allows users to:
 
-**Real-Time** — Socket.io (concurrent booking locks)
+- Explore premium vehicles
+- Search and filter the fleet
+- View vehicle details
+- Check availability
+- Select rental dates
+- View dynamic pricing
+- Make bookings
+- Complete UPI checkout
+- Track bookings from their dashboard
 
-**File Handling** — Multer (vehicle images, payment QR uploads)
+### ⚙️ Admin Application
+
+Located inside `admin/`
+
+The admin application provides a dedicated management console for:
+
+- Fleet management
+- Vehicle CRUD operations
+- Booking management
+- Booking approval
+- Booking cancellation
+- Revenue monitoring
+- Active ride monitoring
+- Payment configuration
+- Inventory management
+
+### 🚀 Backend
+
+Located inside `backend/`
+
+The backend provides:
+
+- REST APIs
+- Authentication
+- JWT authorization
+- Role-Based Access Control
+- Booking validation
+- Dynamic pricing
+- MongoDB integration
+- Socket.io communication
+- File uploads
+- Admin APIs
 
 ---
 
-## Installation
+## ✨ Features
+
+### 👤 For Renters
+
+**🏎️ Premium Fleet Browsing**
+- Browse superbikes and supercars
+- Search and filter vehicles
+- View vehicle categories
+
+**⚡ Real-Time Availability**
+- Server-side availability validation
+- Atomic booking checks
+- Socket.io booking locks
+
+**💰 Dynamic Pricing**
+- Weekday pricing
+- Weekend surge pricing
+- Multi-day rental discounts
+- Server-side price calculation
+
+**🏍️ Vehicle Details**
+- Vehicle images
+- Specifications
+- Rental price
+- Availability
+- Booking dates
+
+**💳 UPI Checkout**
+- UPI QR-based payment
+- Configurable payment information
+- Checkout instructions
+
+**📊 User Dashboard**
+- Active bookings
+- Pending bookings
+- Completed rentals
+- Booking history
+
+### ⚙️ For Fleet Administrators
+
+**📈 Live Dashboard**
+- Revenue overview
+- Fleet statistics
+- Active rides
+- Pending bookings
+
+**🚘 Fleet Management**
+- Add vehicles
+- Edit vehicles
+- Delete vehicles
+- Upload vehicle images
+- Update pricing
+- Manage availability
+
+**📋 Booking Management**
+- View bookings
+- Approve bookings
+- Confirm bookings
+- Activate rentals
+- Cancel bookings
+
+**💳 Payment Settings**
+- Update UPI ID
+- Update payment instructions
+- Update QR code
+
+**🛡️ Secure Admin Access**
+- JWT authentication
+- Role-Based Access Control
+- Protected admin routes
+
+---
+
+## 🔄 How It Works
+
+### 1. Booking Concurrency
+
+When a customer selects a vehicle and rental dates, the backend checks the requested date range against existing bookings. The system performs an atomic availability check before creating the booking. Socket.io locks are also used during the booking process to prevent multiple users from attempting to reserve the same vehicle simultaneously.
+
+```
+Customer A
+     │
+     │ Book Vehicle
+     ▼
+Backend
+     │
+     ├── Check Existing Bookings
+     │
+     ├── Check Vehicle Lock
+     │
+     └── Create Booking
+             │
+             ▼
+        MongoDB Atlas
+```
+
+If another customer attempts to reserve the same vehicle for overlapping dates, the backend rejects the conflicting request.
+
+### 💰 Dynamic Pricing
+
+The final rental price is calculated on the server.
+
+```
+Base Rental Price
+        │
+        ▼
+Weekday / Weekend Adjustment
+        │
+        ▼
+Multi-Day Discount
+        │
+        ▼
+Final Rental Price
+```
+
+The client cannot simply submit its own final price because the backend recalculates the amount before creating the booking.
+
+### 🛡️ Role-Based Access Control
+
+Admin routes are protected using JWT authentication and role verification.
+
+```
+User Login
+    │
+    ▼
+JWT Token
+    │
+    ▼
+Authentication Middleware
+    │
+    ▼
+Role Check
+    │
+    ├── Customer → Customer Routes
+    │
+    └── Admin → Admin Routes
+```
+
+Customers cannot access protected fleet management or administrative booking operations.
+
+### 💳 Payment Configuration
+
+UPI payment information is stored in MongoDB rather than being hardcoded. Administrators can update:
+
+- UPI ID
+- Payment instructions
+- QR code
+
+...without changing the source code or redeploying the application.
+
+---
+
+## 🛠️ Tech Stack
+
+**Frontend**
+- React.js
+- Context API
+- Axios
+- Lucide React
+- Vanilla CSS
+- Vite
+
+**Backend**
+- Node.js
+- Express.js
+- Socket.io
+- Multer
+
+**Database**
+- MongoDB Atlas
+- Mongoose ODM
+
+**Authentication & Security**
+- JSON Web Tokens
+- bcrypt
+- Role-Based Access Control
+
+**Development Tools**
+- Git
+- GitHub
+- VS Code
+- MongoDB Compass
+
+---
+
+## 📦 Installation
 
 ### Prerequisites
-- Node.js v16+
-- A MongoDB Atlas cluster (with your IP whitelisted)
 
-### 1. Clone the repository
+Make sure you have installed:
+
+- Node.js v16+
+- npm
+- Git
+- MongoDB Atlas account
+
+### 1. Clone the Repository
+
 ```bash
 git clone https://github.com/<your-username>/wheelsonroad.git
 cd wheelsonroad
 ```
 
-### 2. Backend setup
+### 2. Backend Setup
+
 ```bash
 cd backend
 npm install
 ```
 
-Create a `backend/.env` file:
+Create `backend/.env`:
+
 ```env
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
 ```
 
-Start the server:
+Start the backend:
+
 ```bash
 npm run dev
 ```
 
-### 3. Frontend setup
+Backend will run on: `http://localhost:5000`
+
+### 3. Frontend Setup
+
+Open another terminal:
+
 ```bash
 cd frontend
 npm install
 npm start
 ```
 
-### 4. Admin dashboard setup
+The customer application will run on its configured frontend port.
+
+### 4. Admin Dashboard Setup
+
+Open another terminal:
+
 ```bash
 cd admin
 npm install
 npm run dev
 ```
 
-### 5. (Optional) Seed the database
-Populate your fleet with 100 superbikes and 100 supercars:
+The admin dashboard will run on its Vite development port.
+
+### 5. Optional Database Seeding
+
+To populate the database with sample vehicles:
+
 ```bash
 cd backend
 node seedVehicles.js
@@ -160,85 +381,424 @@ node seedVehicles.js
 
 ---
 
-## Usage
+## ▶️ Usage
 
-1. Start the **backend** (`npm run dev` inside `backend/`) — API runs on `http://localhost:5000`.
-2. Start the **frontend** (`npm start` inside `frontend/`) — customer app opens in your browser.
-3. Start the **admin app** (`npm run dev` inside `admin/`) — dashboard runs on its own Vite port.
-4. **As a customer:** browse the fleet, pick a vehicle, select dates to see the live price breakdown, and complete checkout via the UPI QR flow.
-5. **As an admin:** log in to the admin dashboard to add/edit/remove vehicles, approve or cancel booking requests, and update UPI payment settings.
+### Customer Flow
+
+```
+Landing Page
+     │
+     ▼
+Fleet Page
+     │
+     ▼
+Vehicle Details
+     │
+     ▼
+Select Rental Dates
+     │
+     ▼
+Dynamic Price Calculation
+     │
+     ▼
+Booking
+     │
+     ▼
+UPI Checkout
+     │
+     ▼
+Booking Confirmation
+```
+
+### Admin Flow
+
+```
+Admin Login
+     │
+     ▼
+Admin Dashboard
+     │
+     ├── Fleet Management
+     │
+     ├── Booking Management
+     │
+     ├── Revenue
+     │
+     ├── Active Rides
+     │
+     └── Payment Settings
+```
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 wheelsonroad/
-├── admin/                   # Standalone admin dashboard (Vite + React)
+│
+├── admin/
 │   ├── public/
 │   ├── src/
 │   ├── .eslintrc.cjs
 │   ├── vite.config.js
 │   └── package.json
-├── backend/                 # Express API + Socket.io server
+│
+├── backend/
 │   ├── src/
-│   ├── uploads/              # Multer file storage (vehicle images, QR codes)
-│   ├── seedVehicles.js       # Fleet seeder script
+│   ├── uploads/
+│   │   ├── vehicles/
+│   │   └── qr/
+│   ├── seedVehicles.js
 │   ├── server.js
-│   └── package.json
-├── frontend/                 # Customer-facing React app
-│   ├── build/
+│   ├── package.json
+│   └── .env
+│
+├── frontend/
 │   ├── public/
 │   ├── src/
+│   ├── build/
 │   └── package.json
+│
+├── docs/
+│   └── screenshots/
+│       ├── business-page.png
+│       ├── user-fleet-page.png
+│       ├── vehicle-details-page.png
+│       ├── admin-fleet-management.png
+│       ├── admin-dashboard.png
+│       ├── upi-checkout.png
+│       └── mongodb-database.png
+│
+├── .gitignore
 └── README.md
 ```
 
 ---
 
-## Security Notes
+## 📸 Application Showcase & Results
 
-- `MONGO_URI` and `JWT_SECRET` must never be committed to version control — use `.env` and `.gitignore`.
-- Passwords are hashed with bcrypt before storage; plaintext passwords are never persisted.
-- All admin routes are protected by JWT + RBAC middleware, blocking non-admin access to inventory and reservation data.
+WheelsOnRoad provides a complete end-to-end rental experience across the customer platform, vehicle discovery and booking flow, administrative fleet management, and MongoDB-backed data layer.
 
----
+### 🏢 1. Business / Landing Page
 
-## Results
+The business landing page introduces the WheelsOnRoad premium rental platform through a modern dark-themed interface.
 
-The platform successfully handles concurrent booking attempts on the same vehicle without double-booking, confirmed through manual race-condition testing with simultaneous requests. Dynamic pricing correctly applies weekend surge and multi-day discount rules at checkout, and the admin dashboard reflects booking status changes and inventory updates in real time.
+It provides:
 
-**1. Customer Fleet Browsing & Booking Flow**
+- Brand introduction
+- Premium vehicle showcase
+- Rental categories
+- Featured vehicles
+- Navigation to the fleet
+- Clear booking call-to-action
 
-![Fleet browsing and booking flow screenshot](./docs/screenshots/fleet-browsing.png)
+![Business landing page screenshot](./docs/screenshots/business-page.png)
 
-**2. Live Price Breakdown & UPI Checkout**
+### 👤 2. User Fleet Page
+
+The user fleet page allows customers to explore the complete collection of premium superbikes and supercars.
+
+Users can:
+
+- Browse vehicles
+- Search vehicles
+- Filter by category
+- View rental prices
+- Check availability
+- Open vehicle details
+
+![User fleet page screenshot](./docs/screenshots/user-fleet-page.png)
+
+### 🏍️ 3. Vehicle Details Page
+
+The vehicle details page provides complete information about an individual rental vehicle.
+
+It includes:
+
+- Vehicle images
+- Vehicle name
+- Category
+- Specifications
+- Rental price
+- Availability
+- Rental date selection
+- Dynamic price breakdown
+- Booking action
+
+![Vehicle details page screenshot](./docs/screenshots/vehicle-details-page.png)
+
+### 💳 4. UPI Checkout
+
+The checkout page provides customers with a UPI QR-based payment experience.
+
+Customers can view:
+
+- Vehicle information
+- Rental dates
+- Number of rental days
+- Base price
+- Discounts
+- Weekend adjustments
+- Final rental amount
+- UPI payment instructions
+- QR code
 
 ![UPI checkout screenshot](./docs/screenshots/upi-checkout.png)
 
-**3. Admin Dashboard (Revenue, Active Rides, Approvals)**
+### ⚙️ 5. Fleet Management Console
+
+The Fleet Management Console provides administrators with centralized control over the rental inventory.
+
+Administrators can:
+
+- ➕ Add new vehicles
+- ✏️ Edit vehicle information
+- 🖼️ Upload vehicle images
+- 💰 Update rental prices
+- 🏷️ Change vehicle categories
+- 🔄 Manage availability
+- 🗑️ Remove vehicles
+- 📋 View fleet inventory
+
+![Fleet management console screenshot](./docs/screenshots/admin-fleet-management.png)
+
+### 📊 6. Admin Dashboard
+
+The Admin Dashboard provides administrators with a centralized overview of the rental platform.
+
+It displays information such as:
+
+- Total vehicles
+- Total bookings
+- Pending bookings
+- Active rides
+- Revenue information
+- Fleet statistics
+- Booking activity
 
 ![Admin dashboard screenshot](./docs/screenshots/admin-dashboard.png)
 
-> Add your screenshots to a `docs/screenshots/` folder in the repo with matching filenames. A short screen-recording GIF of the booking flow works even better than static images here.
+### 🍃 7. MongoDB Database
+
+MongoDB Atlas acts as the primary database for the application.
+
+The database stores information including:
+
+- 👤 Users
+- 🚘 Vehicles
+- 📋 Bookings
+- 🔐 Authentication data
+- 💳 Payment configuration
+- ⚙️ Administrative settings
+
+![MongoDB Atlas database screenshot](./docs/screenshots/mongodb-database.png)
 
 ---
 
-## Contributing
+## 🔄 Complete Platform Architecture
 
-Contributions are welcome. To contribute:
+```
+                         🏍️ WHEELSONROAD
+                              │
+             ┌────────────────┴────────────────┐
+             │                                 │
+             ▼                                 ▼
+      👤 CUSTOMER APP                    ⚙️ ADMIN APP
+             │                                 │
+             │                                 │
+       Business Page                    Admin Dashboard
+             │                                 │
+       Fleet Browsing                  Fleet Management
+             │                                 │
+      Vehicle Details                  Booking Management
+             │                                 │
+       Date Selection                  Payment Settings
+             │                                 │
+       Price Calculation                Revenue / Rides
+             │                                 │
+        UPI Checkout                          │
+             │                                 │
+             └────────────────┬────────────────┘
+                              │
+                              ▼
+                    🚀 NODE + EXPRESS
+                              │
+             ┌────────────────┼────────────────┐
+             │                │                │
+             ▼                ▼                ▼
+           JWT            Socket.io       Pricing Engine
+         / RBAC           Real-Time        Server-Side
+             │            Locking           Pricing
+             │                │                │
+             └────────────────┼────────────────┘
+                              │
+                              ▼
+                       🍃 MONGODB ATLAS
+                              │
+               ┌──────────────┼──────────────┐
+               │              │              │
+               ▼              ▼              ▼
+             Users         Vehicles       Bookings
+                              │
+                              ▼
+                       Payment Settings
+```
+
+---
+
+## 📷 Screenshot Gallery
+
+### Business & Customer Experience
+
+| 🏢 Business Page | 👤 User Fleet |
+|---|---|
+| ![Business page](./docs/screenshots/business-page.png) | ![User fleet page](./docs/screenshots/user-fleet-page.png) |
+
+### Vehicle & Booking
+
+| 🏍️ Vehicle Details | 💳 UPI Checkout |
+|---|---|
+| ![Vehicle details page](./docs/screenshots/vehicle-details-page.png) | ![UPI checkout](./docs/screenshots/upi-checkout.png) |
+
+### Administration
+
+| ⚙️ Fleet Management | 📊 Admin Dashboard |
+|---|---|
+| ![Fleet management console](./docs/screenshots/admin-fleet-management.png) | ![Admin dashboard](./docs/screenshots/admin-dashboard.png) |
+
+### Database
+
+<div align="center">
+
+**🍃 MongoDB Atlas**
+
+![MongoDB Atlas database](./docs/screenshots/mongodb-database.png)
+
+</div>
+
+> Add your own screenshots into `docs/screenshots/` with the filenames shown above so they render correctly on GitHub.
+
+---
+
+## 🏆 Results
+
+The WheelsOnRoad platform successfully demonstrates a complete rental management workflow.
+
+### Customer Results
+
+- ✅ Premium rental landing page
+- ✅ Fleet browsing
+- ✅ Vehicle search and filtering
+- ✅ Vehicle details
+- ✅ Real-time availability
+- ✅ Dynamic pricing
+- ✅ Booking workflow
+- ✅ UPI QR checkout
+- ✅ Customer dashboard
+
+### Admin Results
+
+- ✅ Admin authentication
+- ✅ Fleet management
+- ✅ Vehicle CRUD operations
+- ✅ Vehicle image uploads
+- ✅ Booking management
+- ✅ Booking approval
+- ✅ Active ride monitoring
+- ✅ Revenue monitoring
+- ✅ Payment configuration
+
+### Backend Results
+
+- ✅ REST API architecture
+- ✅ MongoDB Atlas integration
+- ✅ JWT authentication
+- ✅ RBAC authorization
+- ✅ Password hashing
+- ✅ Server-side pricing
+- ✅ Booking collision detection
+- ✅ Socket.io real-time communication
+- ✅ File upload handling
+
+### Reliability Results
+
+The platform was tested against concurrent booking scenarios where multiple requests attempt to reserve the same vehicle for overlapping dates. The backend availability checks prevent conflicting bookings from being created. Dynamic pricing is also calculated server-side at booking time rather than trusting the price supplied by the client.
+
+---
+
+## 🔐 Security Notes
+
+- `MONGO_URI` must never be committed to GitHub.
+- `JWT_SECRET` must never be committed to GitHub.
+- `.env` files should be included in `.gitignore`.
+- Passwords are hashed using bcrypt.
+- Admin routes are protected by JWT authentication.
+- Admin routes additionally verify the user's role.
+- Pricing is calculated server-side.
+- Booking availability is validated by the backend.
+- Sensitive credentials should be stored using environment variables.
+
+Example `.gitignore`:
+
+```gitignore
+node_modules/
+.env
+.env.local
+dist/
+build/
+.DS_Store
+npm-debug.log*
+```
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome.
+
 1. Fork the repository
-2. Create a new branch (`git checkout -b feature/your-feature`)
-3. Make your changes and commit them
-4. Push to your fork and submit a pull request
+2. Create a feature branch
+   ```bash
+   git checkout -b feature/your-feature
+   ```
+3. Make your changes
+4. Commit your changes
+   ```bash
+   git add .
+   git commit -m "Add your feature"
+   ```
+5. Push your branch
+   ```bash
+   git push origin feature/your-feature
+   ```
+6. Create a Pull Request
 
-Future enhancements could include Razorpay/Stripe integration alongside UPI, a vehicle review & rating system, and automated email/SMS booking confirmations.
+Submit a Pull Request for review.
 
 ---
 
-## License
+## 🔮 Future Enhancements
 
-This project is **proprietary** and built specifically for the WheelsOnRoad premium mobility platform. All rights reserved.
+Potential future improvements include:
+
+- 💳 Razorpay / Stripe integration
+- ⭐ Vehicle reviews and ratings
+- 📧 Automated email confirmations
+- 📱 SMS booking notifications
+- 📍 GPS-based vehicle tracking
+- 📅 Advanced availability calendar
+- 🤖 AI-powered vehicle recommendations
+- 📊 Advanced analytics dashboard
+- ☁️ Cloud image storage
+- 🔔 Real-time booking notifications
+
+---
+
+## 📄 License
+
+This project is **proprietary** and built specifically for the WheelsOnRoad premium mobility platform.
+
+All rights reserved.
 
 ---
 
