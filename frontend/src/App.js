@@ -1,35 +1,76 @@
-// import logo from './logo.svg';
-import './App.css';
-import Navbar from './Components/Navbar/Navbar';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Shop from './Pages/Shop';
-import ShopCategory from './Pages/ShopCategory';
-import Product from './Pages/Product';
-import Cart from './Pages/Cart';
-import LoginSignup from './Pages/LoginSignup';
-import Footer from './Components/Footer/Footer';
-import sale_banner from './Components/Assets/new-banner.png'
+import React, { useState, useContext } from "react";
+import { ApexProvider, ApexContext } from "./Context/ApexContext";
+import BusinessIntroPage from "./Pages/BusinessIntroPage";
+import FleetPage from "./Pages/HomePage";
+import { DashboardPage } from "./Pages/DashboardPage";
+import { AdminPage } from "./Pages/AdminPage";
+import { VehicleDetails } from "./Pages/VehicleDetails";
+import "./index.css";
+
+const AppRoutes = () => {
+  const [activePage, setActivePage] = useState("intro"); // starts on intro page with bg video
+  const [selectedVehicleId, setSelectedVehicleId] = useState(null);
+  const { user } = useContext(ApexContext);
+
+  const handlePageChange = (page) => {
+    setActivePage(page);
+    setSelectedVehicleId(null);
+    window.scrollTo(0, 0);
+  };
+
+  const handleViewVehicle = (vehicleId) => {
+    setSelectedVehicleId(vehicleId);
+    setActivePage("vehicleDetails");
+    window.scrollTo(0, 0);
+  };
+
+  const handleBackToFleet = () => {
+    setSelectedVehicleId(null);
+    setActivePage("fleet");
+    window.scrollTo(0, 0);
+  };
+
+  if (activePage === "intro") {
+    return (
+      <BusinessIntroPage
+        onExploreWheelsOnRoad={() => handlePageChange("fleet")}
+      />
+    );
+  }
+
+  if (activePage === "vehicleDetails" && selectedVehicleId) {
+    return (
+      <VehicleDetails
+        vehicleId={selectedVehicleId}
+        onBack={handleBackToFleet}
+        onViewSimilar={handleViewVehicle}
+      />
+    );
+  }
+
+  if (activePage === "dashboard") {
+    return <DashboardPage onPageChange={handlePageChange} />;
+  }
+
+  if (activePage === "admin") {
+    return <AdminPage onPageChange={handlePageChange} />;
+  }
+
+  // Default: Fleet / Home page (bikes & cars)
+  return (
+    <FleetPage
+      onNavigate={handlePageChange}
+      onPageChange={handlePageChange}
+      onViewVehicle={handleViewVehicle}
+    />
+  );
+};
 
 function App() {
   return (
-    <div>
-      <BrowserRouter>
-        <Navbar/>
-        <Routes>
-          <Route path='/' element={<Shop/>}/>
-          <Route path='/phones' element={<ShopCategory banner={sale_banner} category='Phones'/>}/>
-          <Route path='/tablets' element={<ShopCategory banner={sale_banner} category='Tablets' />}/>
-          <Route path='/laptops' element={<ShopCategory banner={sale_banner} category='Laptops' />}/>
-          <Route path='/audio' element={<ShopCategory banner={sale_banner} category='Audio' />}/>
-          <Route path='/product' element={<Product/>}>
-            <Route path=':productId' element={<Product/>}/>
-          </Route>
-          <Route path='/cart' element={<Cart/>}/>
-          <Route path='/login' element={<LoginSignup/>}/>
-        </Routes>
-        <Footer/>
-      </BrowserRouter>
-    </div>
+    <ApexProvider>
+      <AppRoutes />
+    </ApexProvider>
   );
 }
 

@@ -1,8 +1,83 @@
-﻿# MERN-ECommerce-Full-Stack-Project
+# WheelsOnRoad (ApexLease) 🏍️🚗
 
-This is a Full Stack e-commerce project built using Mongodb, Express, React and NodeJs. It includes the main website as well as an admin dashboard for product inventory management. There are 3 directories: frontend (React front end for the main website), backend (Nodejs using npm init) and admin (React front end for admin dashboard. The main website consists of a clean UI for the Cyber Tech Store with the ability to browse products, view product details, add to cart as well as log in and out of the application. Using React hooks and the Mongodb atlas database, product details as well as cart information are always saved. So cart data would remain preserved if you log in or out. The admin dashboard on the other hand allows you to add products of 4 different categories (Phones, Tablets, Laptops and Audio) and also the ability to view them in a list as well as remove them. Adding/Removing products also removes them from the database and hence from the frontend. The backend contains API endpoints for various functionalities such as retrieving product information, authentication, getting cart data, listening for requests and initializing services such as jwt, cors, express and mongoose.
+WheelsOnRoad (also known as ApexLease) is a premium, full-stack MERN application designed for renting high-performance Superbikes and Supercars. It offers a sleek, dark-themed user interface, robust administrative controls, and a seamless booking experience complete with UPI payment integration.
 
-This credit to this project goes to GreatStack, a YouTube channel, with various full stack tutorials. I have attached his channel's link and the video tutorial for this project. This project was solely done for the purposes of learning and profile building. While the structure is mostly the same, I added my own twist and changed it from a clothing store called "Shopper" to a tech store called "Cyber Tech". The logo, color scheme, banners are all my own. Credit goes to flaticon.com for some icons.
+## 🌟 Key Features
 
-GreatStack Youtube Channel: https://www.youtube.com/@GreatStackDev
-Video Tutorial: https://youtu.be/y99YgaQjgx4?si=56HxW1e6fFdstdv7
+### For Renters (Customers)
+*   **Premium Fleet Browsing:** Filter and search through an extensive catalog of superbikes and supercars.
+*   **Real-Time Availability:** Prevent double-booking with real-time atomic collision checks and Socket.io locks.
+*   **Dynamic Pricing:** Automatic calculation of weekday, weekend surge rates, and multi-day discounts.
+*   **Seamless Booking Flow:** Select dates, view a detailed price breakdown, and finalize bookings via secure UPI QR payments.
+*   **My Dashboard:** Track the status of active, pending, and past rides all in one place.
+
+### For Fleet Administrators
+*   **Live Dashboard:** Overview of total revenue, active rides, and pending approvals.
+*   **Inventory Management:** Full CRUD operations (Add, Edit, Delete) for fleet vehicles directly from the UI.
+*   **Booking Management:** Review booking requests, update statuses (e.g., Pending Approval -> Confirmed -> Active), and manage cancellations.
+*   **Dynamic Payment Settings:** Update the company's UPI ID, instructions, and QR code for customer checkouts dynamically without touching code.
+*   **Secure Access:** All administrative actions are protected by strict JWT Role-Based Access Control (RBAC).
+
+## 🛠️ Technology Stack
+
+*   **Frontend:** React.js, Context API for state management, Axios for API calls, Lucide-React for premium iconography, Vanilla CSS (Dark/Orange theme).
+*   **Backend:** Node.js, Express.js.
+*   **Database:** MongoDB Atlas (Mongoose ODM).
+*   **Authentication:** JSON Web Tokens (JWT) & bcrypt for secure password hashing.
+*   **Real-time:** Socket.io (for handling concurrent booking locks).
+*   **File Uploads:** Multer for handling vehicle images and QR code uploads.
+
+## 🚀 Getting Started
+
+### Prerequisites
+*   Node.js (v16+)
+*   MongoDB Atlas cluster (Ensure your IP is whitelisted!)
+
+### 1. Backend Setup
+1. Navigate to the backend directory:
+   ```bash
+   cd backend
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Set up environment variables (`backend/.env`):
+   ```env
+   PORT=5000
+   MONGO_URI=your_mongodb_connection_string
+   JWT_SECRET=your_jwt_secret
+   ```
+4. Start the server:
+   ```bash
+   npm run dev
+   ```
+
+### 2. Frontend Setup
+1. Navigate to the frontend directory:
+   ```bash
+   cd frontend
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the React development server:
+   ```bash
+   npm start
+   ```
+
+### 3. Database Seeding (Optional)
+To quickly populate your fleet with premium vehicles, a seeder script is provided.
+```bash
+cd backend
+node seedVehicles.js
+```
+*This will insert 100 superbikes and 100 supercars into your database.*
+
+## 🔒 Security Notes
+*   Ensure that the MongoDB connection string (`MONGO_URI`) and JWT secret (`JWT_SECRET`) are never committed to version control.
+*   The application includes middleware to prevent non-admins from modifying fleet inventory or viewing all reservations.
+
+## 📄 License
+This project is proprietary and built specifically for the WheelsOnRoad premium mobility platform.

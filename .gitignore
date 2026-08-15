@@ -1,0 +1,8 @@
+node_modules/
+.env
+.env.*
+build/
+dist/
+.DS_Store
+*.log
+EOFnode_modules/

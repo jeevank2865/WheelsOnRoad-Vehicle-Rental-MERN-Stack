@@ -18,7 +18,8 @@ const ShopContextProvider = (props) => {
     useEffect(() => {
         fetch('http://localhost:4000/all-products')
         .then(res => res.json())
-        .then(data => setAll_Product(data));
+        .then(data => setAll_Product(data))
+        .catch(err => console.log("Shop products fetch failed (backend offline)"));
 
         if(localStorage.getItem('auth-token')){
             fetch('http://localhost:4000/getcart',{
@@ -31,7 +32,8 @@ const ShopContextProvider = (props) => {
                 body: ""
             })
             .then(res => res.json())
-            .then(data => setCartItems(data));
+            .then(data => setCartItems(data))
+            .catch(err => console.log("Shop cart fetch failed (backend offline)"));
         }
     },[])
 
