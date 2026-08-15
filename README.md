@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🏍️ WheelsOnRoad | ApexLease 🚗
+# 🏍️ WheelsOnRoad 🚗
 
 ### Premium Superbike & Supercar Rental Platform
 
