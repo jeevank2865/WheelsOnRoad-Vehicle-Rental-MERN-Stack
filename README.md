@@ -42,7 +42,7 @@ The platform also includes:
 - MongoDB Atlas persistence
 - Socket.io real-time communication
 
-**Repository:** *Replace this with your GitHub repository link.*
+**Repository:** https://github.com/jeevank2865/WheelsOnRoad-Vehicle-Rental-MERN-Stack
 
 ---
 
