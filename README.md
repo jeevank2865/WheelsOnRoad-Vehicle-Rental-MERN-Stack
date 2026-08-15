@@ -122,25 +122,43 @@ node seedVehicles.js
 
 ```
 wheelsonroad/
-├── backend/
-│   ├── controllers/       # Route logic (bookings, vehicles, auth, admin)
-│   ├── models/             # Mongoose schemas
-│   ├── routes/             # Express API routes
-│   ├── middleware/         # JWT auth & RBAC middleware
-│   ├── sockets/             # Socket.io booking-lock handlers
-│   ├── seedVehicles.js     # Fleet seeder script
-│   └── server.js
-├── frontend/
+├── admin/                   # Standalone admin dashboard (Vite + React)
+│   ├── public/
 │   ├── src/
-│   │   ├── components/     # Reusable UI components
-│   │   ├── context/         # Context API state providers
-│   │   ├── pages/           # Route-level pages
-│   │   └── services/        # Axios API layer
-│   └── public/
+│   ├── .eslintrc.cjs
+│   ├── vite.config.js
+│   └── package.json
+├── backend/                 # Express API + Socket.io server
+│   ├── src/
+│   ├── uploads/              # Multer file storage (vehicle images, QR codes)
+│   ├── seedVehicles.js       # Fleet seeder script
+│   ├── server.js
+│   └── package.json
+├── frontend/                 # Customer-facing React app
+│   ├── build/
+│   ├── public/
+│   ├── src/
+│   └── package.json
 └── README.md
 ```
 
-> Adjust this tree to match your actual folder layout before publishing.
+---
+
+## 📸 Demo
+
+<div align="center">
+
+| Fleet Browsing | Booking Flow |
+|---|---|
+| ![Fleet browsing screenshot](./docs/screenshots/fleet-browsing.png) | ![Booking flow screenshot](./docs/screenshots/booking-flow.png) |
+
+| Admin Dashboard | UPI Checkout |
+|---|---|
+| ![Admin dashboard screenshot](./docs/screenshots/admin-dashboard.png) | ![UPI checkout screenshot](./docs/screenshots/upi-checkout.png) |
+
+</div>
+
+> Add your own screenshots to a `docs/screenshots/` folder in the repo and update the paths above. A short screen-recording GIF of the booking flow works even better than static images here.
 
 ---
 
@@ -149,15 +167,6 @@ wheelsonroad/
 - `MONGO_URI` and `JWT_SECRET` must never be committed to version control — use `.env` and `.gitignore`.
 - Passwords are hashed with bcrypt before storage; plaintext passwords are never persisted.
 - All admin routes are protected by JWT + RBAC middleware, blocking non-admin access to inventory and reservation data.
-
----
-
-## 🗺️ Roadmap
-
-- [ ] Automated email/SMS booking confirmations
-- [ ] Razorpay/Stripe integration alongside UPI
-- [ ] Vehicle review & rating system
-- [ ] Admin analytics dashboard with revenue charts
 
 ---
 
